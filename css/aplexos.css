@@ -1,0 +1,70 @@
+body {
+  margin: 0px;
+  background: #c9caca
+}
+
+.sps_header_css{
+  height: 56px;
+  background-image: url("../img/gateway-01.png");
+  background-repeat: repeat-x;
+}
+
+.sps_foot_css{
+  height: 34px;
+  background-image: url("../img/gateway-03.png");
+  background-repeat: repeat-x;
+}
+
+.sps_logo_css{
+  float: right;
+}
+
+/* 动态为footer添加类fixed-bottom */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  width:100%;
+}
+
+table {
+  // border: 0px solid black;
+  color: aliceblue;
+  height:150px; 
+  width:800px; 
+  background-color: #707070;
+  table-layout: fixed; 
+  margin-top: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius:30px;
+  vertical-align:middle; 
+  text-align:center;
+}
+
+table td img {
+  width:50px;
+  height: 50px;
+}
+
+.sps_img_button:hover {
+  width:65px;
+  height: 65px;
+}
+
+.sps_img_tr {
+  border-radius:30px;
+  vertical-align:middle; 
+  text-align:center;
+  height: 40px;
+}
+
+.sps_text_tr {
+  border-radius:30px;
+  vertical-align:middle; 
+  text-align:center;
+  height: 20px;
+}
+
+.deviceOption{
+  font-size: 30px;
+}
