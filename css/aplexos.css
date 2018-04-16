@@ -30,7 +30,7 @@ table {
   // border: 0px solid black;
   color: aliceblue;
   height:150px; 
-  width:800px; 
+  width:80%; 
   background-color: #707070;
   table-layout: fixed; 
   margin-top: 10px;
@@ -67,4 +67,5 @@ table td img {
 
 .deviceOption{
   font-size: 30px;
+  border-radius:10px;
 }
