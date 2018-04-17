@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="css/aplexos.css" type="text/css" />
+    <title> AplexOS </title>
   </head>
   <body>
   
@@ -26,6 +27,11 @@
 
   <div align="center">
     <table>
+      <tr>
+        <td colspan="6">
+           <h2> Button Status </h2>
+        </td>
+      </tr>
       <tr>
         <td class="sps_img_tr">
           <img name="light_led_1" src="img/led_green.png"/>
@@ -71,11 +77,35 @@
   </div>
 
   <div align="center">
-    <div style="width:35%; height:auto; float:left; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-left: 10%; margin-right: 5%">
-      AplexOS
+    <div style="width:35%; height:auto; float:left; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-left: 10%; margin-right: 5%; color: aliceblue; padding-bottom: 20px">
+      <h2> LED </h2>
+      <h3>
+        Please Select Status:
+        <select class="deviceOption">
+          <option value="0">Light Up All</option>
+          <option value="1">All Extinguished</option>
+          <option value="3">Blinking</option>
+          <option value="4">Water Lamp</option>
+        </select>
+      </h3>
     </div> 
-    <div style="width:35%; height:auto; float:right; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-right: 10%; margin-left: 5%">
-      AplexOS
+    <div style="width:35%; height:auto; float:right; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-right: 10%; margin-left: 5%; color: aliceblue; padding-bottom: 20px">
+      <h2> Digital Tube </h2>
+      <h3>
+        Please Select Num:
+        <select class="deviceOption">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
+      </h3>
     </div> 
   </div>
 
