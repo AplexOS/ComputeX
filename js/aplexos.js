@@ -1,3 +1,72 @@
+class Context{
+    constructor() {
+        this.mqtt = null;                       // mqtt client
+    }
+}
+
+class BaiduIoTHubMQTT {
+    constructor(address, port, username, passwd, topic) {
+        // Create a client instance
+        this.client = new Paho.MQTT.Client(address, port, "DeviceId-" + Math.random().toString(36).substring(7));
+        this.username = username;
+        this.passwd = passwd;
+        this.topic = topic;
+        this.serverConnected = false;
+        
+        // set callback handlers
+        this.client.onConnectionLost = this.onConnectionLost;
+        this.client.onMessageArrived = this.onMessageArrived;
+        this.connect();
+    }
+
+    connect() {
+        // connect the client
+        this.client.connect({onSuccess:this.onConnect, onFailure:this.onConnectError, userName:this.username, password:this.passwd, useSSL:true});
+    }
+
+    // called when the client connects
+    onConnect() {
+        // Once a connection has been made, make a subscription and send a message.
+        this.serverConnected = true;
+        console.log("mqtt connect");
+    }
+
+    subscribe(topic) {
+        console.log("subscribe topic:" + topic);
+        if (this.client.isConnected()) {
+            this.client.subscribe(topic);
+            this.topic = topic;
+        }
+    }
+
+    unsubscribe(topic) {
+        console.log("unsubscribe topic:" + topic);
+        if (this.client.isConnected()) {
+            this.client.unsubscribe(this.topic);
+        }
+    }
+
+    // called when the client connects
+    onConnectError() {
+        console.log("mqtt connect error");
+    }
+    
+    // called when the client loses its connection
+    onConnectionLost(responseObject) {
+        console.log(responseObject);
+    }
+    
+    // called when a message arrives
+    onMessageArrived(message) {
+        var stminfo = JSON.parse(message.payloadString);
+
+        context.positions[stminfo["name"]] = stminfo;
+
+        console.log(stminfo);
+        // console.log(context.positions);
+    }
+}
+
 function getFileName(filePath){  
     var pos = filePath.lastIndexOf("/");  
     return filePath.substring(pos+1);    
@@ -18,7 +87,17 @@ function randomPowerStatus(img) {
     }
 }
 
+function deviceOptionOnChange(object) {
+    console.log(object.value)
+}
 
+function ledOptionOnChange(object) {
+    console.log(object.value)
+}
+
+function numOptionOnChange(object) {
+    console.log(object.value)
+}
 $(function(){
     function footerPosition(){
         $("footer").removeClass("fixed-bottom");
@@ -37,4 +116,7 @@ $(function(){
     if (document.documentElement.clientHeight > 738) {
         $("#sp_spacing_div").height((document.documentElement.clientHeight / 2) - (738 / 2));
     }
+
+    context = new Context();
+    context.mqtt = new BaiduIoTHubMQTT("baidumap.mqtt.iot.gz.baidubce.com", 8884, "baidumap/iotmap", "bjBb+EUd5rwfo9fBaZUMlwG8psde+abMx35m/euTUfE=", "DataTransfer");
 });

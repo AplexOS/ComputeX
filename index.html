@@ -3,6 +3,7 @@
   <head>
     <link rel="stylesheet" href="css/aplexos.css" type="text/css" />
     <title> AplexOS </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
   </head>
   <body>
   
@@ -15,7 +16,7 @@
 
   <div  align="center">
     <h1> Device Option:
-      <select class="deviceOption">
+      <select class="deviceOption" onchange="deviceOptionOnChange(this)">
         <option value="0">Please Select Device</option>
         <option value="5100">5100</option>
         <option value="5102">5102</option>
@@ -81,9 +82,9 @@
       <h2> LED </h2>
       <h3>
         Please Select Status:
-        <select class="deviceOption">
-          <option value="0">Light Up All</option>
-          <option value="1">All Extinguished</option>
+        <select class="deviceOption" onchange="ledOptionOnChange(this)">
+          <option value="1">Light Up All</option>
+          <option value="2">All Extinguished</option>
           <option value="3">Blinking</option>
           <option value="4">Water Lamp</option>
         </select>
@@ -93,7 +94,7 @@
       <h2> Digital Tube </h2>
       <h3>
         Please Select Num:
-        <select class="deviceOption">
+        <select class="deviceOption" onchange="numOptionOnChange(this)">
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>

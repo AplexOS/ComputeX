@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from Config.ConfigureWin import *
-from Utils.lat_lang import *
 from Simulation import *
 from Utils.RandomString import *
 
