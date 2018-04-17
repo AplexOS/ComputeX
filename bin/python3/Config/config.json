@@ -1,0 +1,10 @@
+{
+  "title": "ComputeX",
+  "debug": true,
+  "console": true,
+  "websocketserver": {
+    "wss_port": 1883,
+    "wss_address": "0.0.0.0"
+  },
+  "devices": ["5100", "5102", "5130", "5140"]
+}
