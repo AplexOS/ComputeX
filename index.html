@@ -35,22 +35,22 @@
       </tr>
       <tr>
         <td class="sps_img_tr">
-          <img name="light_led_1" src="img/led_green.png"/>
+          <img name="light_led_1" src="img/led_gray.png"/>
         </td>
         <td class="sps_img_tr">
-          <img name="light_led_2" src="img/led_green.png"/>
+          <img name="light_led_2" src="img/led_gray.png"/>
         </td>
         <td class="sps_img_tr">
-          <img name="light_led_3" src="img/led_green.png"/>
+          <img name="light_led_3" src="img/led_gray.png"/>
         </td>
         <td class="sps_img_tr">
-          <img name="light_led_4" src="img/led_green.png"/>
+          <img name="light_led_4" src="img/led_gray.png"/>
         </td>
         <td class="sps_img_tr">
-          <img name="light_led_5" src="img/led_green.png"/>
+          <img name="light_led_5" src="img/led_gray.png"/>
         </td>
         <td class="sps_img_tr">
-          <img name="light_led_6" src="img/led_green.png"/>
+          <img name="light_led_6" src="img/led_gray.png"/>
         </td>
       </tr>
 
@@ -82,7 +82,7 @@
       <h2> LED </h2>
       <h3>
         Please Select Status:
-        <select class="deviceOption" onchange="ledOptionOnChange(this)">
+        <select class="deviceOption" id="ledSelect" onchange="ledOptionOnChange(this)">
           <option value="1">Light Up All</option>
           <option value="2">All Extinguished</option>
           <option value="3">Blinking</option>
@@ -94,7 +94,7 @@
       <h2> Digital Tube </h2>
       <h3>
         Please Select Num:
-        <select class="deviceOption" onchange="numOptionOnChange(this)">
+        <select class="deviceOption" id="numSelect" onchange="numOptionOnChange(this)">
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
