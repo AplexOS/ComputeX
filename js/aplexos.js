@@ -62,15 +62,17 @@ class BaiduIoTHubMQTT {
     onMessageArrived(message) {
         var stminfo = JSON.parse(message.payloadString);
 
-        for (var i = 0; i < 6; i++)
-        {
-            if ((stminfo["value"] >> i) & 0x01) {
-                $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_green.png");
-                console.log(1);
-            } else {
-                $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
-                console.log(0);
-            } 
+        if (stminfo["funcode"] == 1) {
+            for (var i = 0; i < 6; i++)
+            {
+                if ((stminfo["value"] >> i) & 0x01) {
+                    $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_green.png");
+                    console.log(1);
+                } else {
+                    $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
+                    console.log(0);
+                } 
+            }
         }
 
         console.log(stminfo);
