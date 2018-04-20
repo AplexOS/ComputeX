@@ -19,7 +19,7 @@ class Simulation (threading.Thread):
             data["funcode"] = random.randint(1, 3)
 
             if (data["funcode"] == 1):
-                data["value"] = random.randint(1, 6)
+                data["value"] = random.randint(1, 2 ** 6)
             elif (data["funcode"] == 2):
                 data["value"] = random.randint(1, 4)
             elif (data["funcode"] == 3):
