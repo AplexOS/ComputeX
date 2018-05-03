@@ -75,6 +75,10 @@ class BaiduIoTHubMQTT {
             }
         }
 
+        if (stminfo["funcode"] == 4) {
+            gaugeElement.setAttribute('data-value', stminfo["value"]);
+        }
+
         console.log(stminfo);
     }
 }
@@ -187,5 +191,7 @@ $(function(){
 
     context = new Context();
     context.mqtt = new BaiduIoTHubMQTT("baidumap.mqtt.iot.gz.baidubce.com", 8884, "baidumap/iotmap", "bjBb+EUd5rwfo9fBaZUMlwG8psde+abMx35m/euTUfE=", "DataTransfer");
+
+    gaugeElement = document.getElementsByTagName('canvas')[0];
 
 });

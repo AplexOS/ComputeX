@@ -3,7 +3,9 @@
   <head>
     <link rel="stylesheet" href="css/aplexos.css" type="text/css" />
     <title> AplexOS </title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <script src="js/gauge.min.js"></script>
   </head>
   <body>
   
@@ -26,55 +28,100 @@
     </h1>
   </div>
 
-  <div align="center">
-    <table>
-      <tr>
-        <td colspan="6">
-           <h2> Button Status </h2>
-        </td>
-      </tr>
-      <tr>
-        <td class="sps_img_tr">
-          <img name="light_led_1" src="img/led_gray.png"/>
-        </td>
-        <td class="sps_img_tr">
-          <img name="light_led_2" src="img/led_gray.png"/>
-        </td>
-        <td class="sps_img_tr">
-          <img name="light_led_3" src="img/led_gray.png"/>
-        </td>
-        <td class="sps_img_tr">
-          <img name="light_led_4" src="img/led_gray.png"/>
-        </td>
-        <td class="sps_img_tr">
-          <img name="light_led_5" src="img/led_gray.png"/>
-        </td>
-        <td class="sps_img_tr">
-          <img name="light_led_6" src="img/led_gray.png"/>
-        </td>
-      </tr>
+  <div align="center" style="clear: both;">
+    <div style="float:left; width:70%">
+      <table style="float:right; width:86%">
+        <tr>
+          <td colspan="6">
+             <h2> Button Status </h2>
+          </td>
+        </tr>
+        <tr>
+          <td class="sps_img_tr">
+            <img name="light_led_1" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_2" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_3" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_4" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_5" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_6" src="img/led_gray.png"/>
+          </td>
+        </tr>
 
-      <tr>
-        <td class="sps_text_tr">
-          light1
-        </td>
-        <td class="sps_text_tr">
-          light2
-        </td>
-        <td class="sps_text_tr">
-          light3
-        </td>
-        <td class="sps_text_tr">
-          light4
-        </td>
-        <td class="sps_text_tr">
-          light5
-        </td>
-        <td class="sps_text_tr">
-          light6
-        </td>
-      </tr>
-    </table>
+        <tr>
+          <td class="sps_text_tr">
+            light1
+          </td>
+          <td class="sps_text_tr">
+            light2
+          </td>
+          <td class="sps_text_tr">
+            light3
+          </td>
+          <td class="sps_text_tr">
+            light4
+          </td>
+          <td class="sps_text_tr">
+            light5
+          </td>
+          <td class="sps_text_tr">
+            light6
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="float:right; width:30%">
+      <div style="float:left; padding-top: 35px; padding-left: 40px;">
+        <canvas id="temperature" data-type="radial-gauge"
+                data-width="150"
+                data-height="150"
+                data-units="℃"
+                data-title="false"
+                data-min-value="0"
+                data-max-value="100"
+                data-value="0"
+                data-animate-on-init="true"
+                data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
+                data-minor-ticks="2"
+                data-stroke-ticks="true"
+                data-highlights='[{"from": 80, "to": 100, "color": "rgba(200, 50, 50, .75)"}]'
+                data-color-plate="#222"
+                data-color-major-ticks="#f5f5f5"
+                data-color-minor-ticks="#ddd"
+                data-color-title="#fff"
+                data-color-units="#ccc"
+                data-color-numbers="#eee"
+                data-color-needle-start="rgba(240, 128, 128, 1)"
+                data-color-needle-end="rgba(255, 160, 122, .9)"
+                data-value-box="true"
+                data-font-value="Repetition"
+                data-font-numbers="Repetition"
+                data-animated-value="true"
+                data-borders="false"
+                data-border-shadow-width="0"
+                data-needle-type="arrow"
+                data-needle-width="2"
+                data-needle-circle-size="7"
+                data-needle-circle-outer="true"
+                data-needle-circle-inner="false"
+                data-animation-duration="1500"
+                data-animation-rule="linear"
+                data-ticks-angle="250"
+                data-start-angle="55"
+                data-color-needle-shadow-down="#333"
+                data-value-box-width="45"
+        ></canvas>
+      </div>
+    </div>
   </div>
 
   <div align="center">
