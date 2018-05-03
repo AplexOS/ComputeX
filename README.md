@@ -1,6 +1,6 @@
 # README.md
 
-* [Show Time](http://zorozeng.com/ComputeX/)
+* [Show Time](http://zorozeng.com/ComputeX/)  
 * [Backend Code](https://github.com/Aplexchenfl/mqtt_message)
 
 ## Simulation
@@ -49,4 +49,10 @@
   * 显示7: `0x07`;
   * 显示8: `0x08`;
   * 显示9: `0x09`;
+
+### 温度
+
+* `funcode`: `0x04`；
+* `value`: 温度对应的值；
+
 
