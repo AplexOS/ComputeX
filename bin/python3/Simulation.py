@@ -16,7 +16,7 @@ class Simulation (threading.Thread):
             data = {}
             data["gateway_id"] = self.name
             data["device_id"] = 1
-            data["funcode"] = random.randint(1, 3)
+            data["funcode"] = random.randint(1, 4)
 
             if (data["funcode"] == 1):
                 data["value"] = random.randint(1, 2 ** 6)
@@ -24,6 +24,8 @@ class Simulation (threading.Thread):
                 data["value"] = random.randint(1, 4)
             elif (data["funcode"] == 3):
                 data["value"] = random.randint(0, 9)
+            elif (data["funcode"] == 4):
+                data["value"] = random.randint(0, 100)
 
             self.dataTransfer.send(data)
             print("device {} send data: ".format(self.name))
