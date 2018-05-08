@@ -10,17 +10,19 @@ import time
 # 初始化配置
 class DataTransfer(threading.Thread):
 
-    def __init__(self, name):
+    def __init__(self, city, name):
 
         threading.Thread.__init__(self)
         print("connect to iot hub.")
         self.__mutex = threading.Lock()
+        self.__city = city
         self.__name = name
         self.connect()
 
     def on_connect(self, client, userdata, flags, rc):
         print(self.__name + ': connected with result code ' + str(rc))
-        client.subscribe("computex/iot/" + self.__name + "/backend")
+        print("computex/" + self.__city + "/iot/" + self.__name + "/backend")
+        client.subscribe("computex/" + self.__city + "/iot/" + self.__name + "/backend")
 
 
     def on_message(self, client, userdata, msg):
@@ -45,9 +47,9 @@ class DataTransfer(threading.Thread):
 
         try:
             self.__mutex.acquire()
-            self.__mqttc.publish("computex/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg)
+            self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg)
             self.__mutex.release()
-        except:
+        except :
             self.connect()
 
 

@@ -6,5 +6,6 @@
     "wss_port": 1883,
     "wss_address": "0.0.0.0"
   },
+  "citys": ["ShangHai", "BeiJing", "ShenZhen", "TaiPei"],
   "devices": ["5100", "5102", "5130", "5140"]
 }

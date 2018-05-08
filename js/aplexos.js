@@ -3,6 +3,7 @@ class Context{
         this.mqtt = null;                       // mqtt client
         this.topic = null;
         this.device = null;
+        this.city = null;
     }
 }
 
@@ -67,10 +68,8 @@ class BaiduIoTHubMQTT {
             {
                 if ((stminfo["value"] >> i) & 0x01) {
                     $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_green.png");
-                    console.log(1);
                 } else {
                     $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
-                    console.log(0);
                 } 
             }
         }
@@ -104,42 +103,58 @@ function randomPowerStatus(img) {
 }
 
 function deviceOptionOnChange(object) {
-    console.log(object.value)
-    console.log($("#ledSelect").val());
-    console.log($("#numSelect").val());
-
     context.device = object.value;
+    console.log(context.device)
+}
 
-    // computex/iot/+/DataTransfer
-    if (context.topic != null) {
-        console.log(context.topic);
-        context.mqtt.unsubscribe(context.topic);
-    } 
-        
-    var current_topic = "computex/iot/" + context.device + "/DataTransfer";
-    context.mqtt.subscribe(current_topic);
-    context.topic = current_topic;
+function cityOptionOnChange(object) {
+    context.city = object.value;
+    console.log(context.city)
+}
 
-    cur_payload = {};
-    cur_payload["gateway_id"] = context.device;
-    cur_payload["device_id"] = 1
-    cur_payload["funcode"] = 2
-    cur_payload["value"] = parseInt($("#ledSelect").val());
+function connectButton(object) {
+    console.log("connect Button");
 
-    // console.log(JSON.stringify(cur_payload));
-    message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/iot/" + context.device + "/backend";
-    context.mqtt.client.send(message);
+    console.log(object.value);
+    if (object.value == "Subscribe") {
+        if (context.device == null || context.city == null) 
+            return;
 
-    cur_payload["gateway_id"] = context.device;
-    cur_payload["device_id"] = 1
-    cur_payload["funcode"] = 3
-    cur_payload["value"] = parseInt($("#numSelect").val());
+        var current_topic = "computex/" + context.city + "/iot/" + context.device + "/DataTransfer";
+        context.mqtt.subscribe(current_topic);
+        context.topic = current_topic;
 
-    // console.log(JSON.stringify(cur_payload));
-    message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/iot/" + context.device + "/backend";
-    context.mqtt.client.send(message);
+        cur_payload = {};
+        cur_payload["gateway_id"] = context.device;
+        cur_payload["device_id"] = 1
+        cur_payload["funcode"] = 2
+        cur_payload["value"] = parseInt($("#ledSelect").val());
+
+        // console.log(JSON.stringify(cur_payload));
+        message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
+        message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
+        context.mqtt.client.send(message);
+
+        cur_payload["gateway_id"] = context.device;
+        cur_payload["device_id"] = 1
+        cur_payload["funcode"] = 3
+        cur_payload["value"] = parseInt($("#numSelect").val());
+
+        // console.log(JSON.stringify(cur_payload));
+        message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
+        message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
+        context.mqtt.client.send(message);
+
+        object.value = "Unsubscribe";
+    } else {
+        if (context.topic != null) {
+            console.log(context.topic);
+            context.mqtt.unsubscribe(context.topic);
+            context.topic = null;
+        } 
+
+        object.value = "Subscribe";
+    }
 }
 
 function ledOptionOnChange(object) {
@@ -153,7 +168,7 @@ function ledOptionOnChange(object) {
 
     // console.log(JSON.stringify(cur_payload));
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/iot/" + context.device + "/backend";
+    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
     context.mqtt.client.send(message);
 }
 
@@ -167,7 +182,7 @@ function numOptionOnChange(object) {
 
     // console.log(JSON.stringify(cur_payload));
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/iot/" + context.device + "/backend";
+    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
     context.mqtt.client.send(message);
 }
 $(function(){
@@ -189,9 +204,9 @@ $(function(){
         $("#sp_spacing_div").height((document.documentElement.clientHeight / 2) - (738 / 2));
     }
 
+    gaugeElement = document.getElementsByTagName('canvas')[0];
+    gaugeElement.setAttribute('data-value', 25);
+
     context = new Context();
     context.mqtt = new BaiduIoTHubMQTT("baidumap.mqtt.iot.gz.baidubce.com", 8884, "baidumap/iotmap", "bjBb+EUd5rwfo9fBaZUMlwG8psde+abMx35m/euTUfE=", "DataTransfer");
-
-    gaugeElement = document.getElementsByTagName('canvas')[0];
-
 });

@@ -5,10 +5,11 @@ from mqtt.DataTransfer import *
 
 class Simulation (threading.Thread):
 
-    def __init__(self, name):
+    def __init__(self, city, name):
         threading.Thread.__init__(self)
+        self.city = city
         self.name = name
-        self.dataTransfer = DataTransfer(name)
+        self.dataTransfer = DataTransfer(city, name)
         self.dataTransfer.start()
 
     def run(self):
@@ -28,7 +29,7 @@ class Simulation (threading.Thread):
                 data["value"] = random.randint(0, 100)
 
             self.dataTransfer.send(data)
-            print("device {} send data: ".format(self.name))
+            print("{} device {} send data: ".format(self.city, self.name))
             print(data)
 
             time.sleep(5)

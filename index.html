@@ -18,13 +18,21 @@
 
   <div  align="center">
     <h1> Device Option:
+      <select class="deviceOption" onchange="cityOptionOnChange(this)">
+        <option value="0">Select City</option>
+        <option value="BeiJing">BeiJing</option>
+        <option value="ShangHai">ShangHai</option>
+        <option value="ShenZhen">ShenZhen</option>
+        <option value="TaiPei">TaiPei</option>
+      </select>
       <select class="deviceOption" onchange="deviceOptionOnChange(this)">
-        <option value="0">Please Select Device</option>
+        <option value="0">Select Device</option>
         <option value="5100">5100</option>
         <option value="5102">5102</option>
         <option value="5130">5130</option>
         <option value="5140">5140</option>
       </select>
+      <input type="button" class="deviceOption" style="width:250px; height:50px" value="Subscribe" onclick="connectButton(this)"/>
     </h1>
   </div>
 
@@ -88,7 +96,6 @@
                 data-title="false"
                 data-min-value="0"
                 data-max-value="100"
-                data-value="0"
                 data-animate-on-init="true"
                 data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
                 data-minor-ticks="2"

@@ -3,6 +3,13 @@
 * [Show Time](http://zorozeng.com/ComputeX/)  
 * [Backend Code](https://github.com/Aplexchenfl/mqtt_message)
 
+## MQTT Topic
+
+* `computex/+/iot/+/backend`
+  * `computex/{{city}}/iot/{{device}}/backend`
+* `computex/+/iot/+/DataTransfer`
+  * `computex/{{city}}/iot/{{device}}/DataTransfer`
+
 ## Simulation
 
 [Python3 Code](https://github.com/ZengjfOS/ComputeX/tree/master/bin/python3)
@@ -54,5 +61,3 @@
 
 * `funcode`: `0x04`；
 * `value`: 温度对应的值；
-
-
