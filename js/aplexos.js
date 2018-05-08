@@ -31,6 +31,8 @@ class BaiduIoTHubMQTT {
     onConnect() {
         // Once a connection has been made, make a subscription and send a message.
         this.serverConnected = true;
+        $("#subscribeBut").prop("disabled", false);
+        $("#subscribeBut").html("Subscribe");
         console.log("mqtt connect");
     }
 
@@ -115,8 +117,9 @@ function cityOptionOnChange(object) {
 function connectButton(object) {
     console.log("connect Button");
 
-    console.log(object.value);
-    if (object.value == "Subscribe") {
+    console.log(object.innerHTML);
+
+    if (object.innerHTML == "Subscribe") {
         if (context.device == null || context.city == null) 
             return;
 
@@ -145,7 +148,7 @@ function connectButton(object) {
         message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
         context.mqtt.client.send(message);
 
-        object.value = "Unsubscribe";
+        object.innerHTML = "Unsubscribe";
     } else {
         if (context.topic != null) {
             console.log(context.topic);
@@ -153,7 +156,7 @@ function connectButton(object) {
             context.topic = null;
         } 
 
-        object.value = "Subscribe";
+        object.innerHTML = "Subscribe";
     }
 }
 

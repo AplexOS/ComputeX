@@ -20,10 +20,10 @@
     <h1> Device Option:
       <select class="deviceOption" onchange="cityOptionOnChange(this)">
         <option value="0">Select City</option>
-        <option value="BeiJing">BeiJing</option>
-        <option value="ShangHai">ShangHai</option>
-        <option value="ShenZhen">ShenZhen</option>
-        <option value="TaiPei">TaiPei</option>
+        <option value="Beijing">Beijing</option>
+        <option value="Shanghai">Shanghai</option>
+        <option value="Shenzhen">Shenzhen</option>
+        <option value="Taipei">Taipei</option>
       </select>
       <select class="deviceOption" onchange="deviceOptionOnChange(this)">
         <option value="0">Select Device</option>
@@ -32,7 +32,10 @@
         <option value="5130">5130</option>
         <option value="5140">5140</option>
       </select>
-      <input type="button" class="deviceOption" style="width:250px; height:50px" value="Subscribe" onclick="connectButton(this)"/>
+      <!--
+      <input type="button" class="deviceOption" style="width:250px; height:50px" id="subscribeBut" value="Connecting..." onclick="connectButton(this)" disabled="disabled"/>
+      -->
+      <button class="deviceOption" style="width:250px; height:50px" id="subscribeBut" disabled="disabled" onclick="connectButton(this)">Connecting</button>
     </h1>
   </div>
 
