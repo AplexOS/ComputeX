@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="css/aplexos.css" type="text/css" />
+    <link rel="stylesheet" href="css/numberic-display.css" type="text/css" />
     <title> AplexOS </title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
@@ -136,10 +137,38 @@
 
   <div align="center">
     <div style="width:35%; height:auto; float:left; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-left: 10%; margin-right: 5%; color: aliceblue; padding-bottom: 20px">
-      <h2> LED </h2>
+      <table class="led_image">
+        <tr>
+          <td class="led_img_tr">
+            <img name="led_led_1" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_2" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_3" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_4" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_5" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_6" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_7" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_8" src="img/led_gray.png"/>
+          </td>
+        </tr>
+      </table>
       <h3>
-        Please Select Status:
+        LED Status:
         <select class="deviceOption" id="ledSelect" onchange="ledOptionOnChange(this)">
+          <option value="-1">Select</option>
           <option value="1">All On</option>
           <option value="2">All Off</option>
           <option value="3">Blinking</option>
@@ -148,10 +177,14 @@
       </h3>
     </div> 
     <div style="width:35%; height:auto; float:right; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-right: 10%; margin-left: 5%; color: aliceblue; padding-bottom: 20px">
-      <h2> Digital Tube </h2>
+      <div id="led1" style='margin-top: 30px; display:inline-block;'></div>
+      <div id="led2" style='margin-top: 30px; display:inline-block;'></div>
+      <div id="led3" style='margin-top: 30px; display:inline-block;'></div>
+      <div id="led4" style='margin-top: 30px; display:inline-block;'></div>
       <h3>
-        Please Select Num:
+        Digital Tube:
         <select class="deviceOption" id="numSelect" onchange="numOptionOnChange(this)">
+          <option value="-1">Select</option>
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -175,6 +208,7 @@
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script src="js/numberic-display.js"></script>
   <script type="text/javascript" src="js/aplexos.js"></script>
   
   </body>
