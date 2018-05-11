@@ -16,6 +16,8 @@
 * `computex/+/iot/+/DataTransfer`：专门给数据传输
   * `computex/{{city}}/iot/{{device}}/DataTransfer`
 
+为了让新连接的设备能够获取到当前最新的消息，所有发送的消息带上`retained = true`;
+
 ## Simulation
 
 [Python3 Code](https://github.com/ZengjfOS/ComputeX/tree/master/bin/python3)
