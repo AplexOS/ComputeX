@@ -10,9 +10,9 @@
 * `computex/+/iot/+/backend`：兼容以前版本
   * `computex/{{city}}/iot/{{device}}/backend`
 * `computex/+/iot/+/ledBackend`：专门为反控Led控制
-  * `computex/{{city}}/iot/{{device}}/backend`
+  * `computex/{{city}}/iot/{{device}}/ledBackend`
 * `computex/+/iot/+/numBackend`：专门为反控数码管控制
-  * `computex/{{city}}/iot/{{device}}/backend`
+  * `computex/{{city}}/iot/{{device}}/numBackend`
 * `computex/+/iot/+/DataTransfer`：专门给数据传输
   * `computex/{{city}}/iot/{{device}}/DataTransfer`
 
