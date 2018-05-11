@@ -28,9 +28,10 @@ class Simulation (threading.Thread):
             elif (data["funcode"] == 4):
                 data["value"] = random.randint(0, 100)
 
-            self.dataTransfer.send(data)
-            print("{} device {} send data: ".format(self.city, self.name))
-            print(data)
+            if self.dataTransfer.connected :
+                self.dataTransfer.send(data)
+                print("{} device {} send data: ".format(self.city, self.name))
+                print(data)
 
             time.sleep(5)
 

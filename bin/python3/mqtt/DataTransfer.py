@@ -13,21 +13,32 @@ class DataTransfer(threading.Thread):
     def __init__(self, city, name):
 
         threading.Thread.__init__(self)
-        print("connect to iot hub.")
         self.__mutex = threading.Lock()
         self.__city = city
         self.__name = name
-        self.connect()
+        self.connected = False;
 
     def on_connect(self, client, userdata, flags, rc):
         print(self.__name + ': connected with result code ' + str(rc))
         print("computex/" + self.__city + "/iot/" + self.__name + "/backend")
         client.subscribe("computex/" + self.__city + "/iot/" + self.__name + "/backend")
-
+        self.connected = True;
 
     def on_message(self, client, userdata, msg):
         print(msg.topic + ' ' + str(msg.payload))
         print(json.loads(msg.payload.decode('utf8')))
+
+    def on_disconnect(self, client, userdata, rc):
+        print("{} device disconnect".format(self.__city, self.__name))
+        self.connected = False;
+        while True :
+            time.sleep(5);
+            try :
+                self.__mqttc.reconnect()
+            except :
+                print("{} device connect error".format(self.__city, self.__name))
+            else:
+                break;
 
     def connect(self):
         self.__mutex.acquire()
@@ -36,8 +47,16 @@ class DataTransfer(threading.Thread):
         self.__mqttc.username_pw_set("baidumap/iotmap", "bjBb+EUd5rwfo9fBaZUMlwG8psde+abMx35m/euTUfE=")
         self.__mqttc.on_connect = self.on_connect
         self.__mqttc.on_message = self.on_message
+        self.__mqttc.on_disconnect = self.on_disconnect
 
-        self.__mqttc.connect('baidumap.mqtt.iot.gz.baidubce.com', port=1883)
+        while True:
+            try:
+                self.__mqttc.connect('baidumap.mqtt.iot.gz.baidubce.com', port=1883)
+            except:
+                print("{} device connect error".format(self.__city, self.__name))
+                time.sleep(5);
+            else:
+                break;
 
         self.__mutex.release()
 
@@ -47,13 +66,17 @@ class DataTransfer(threading.Thread):
 
         try:
             self.__mutex.acquire()
-            self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg)
+            if self.connected :
+                self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg)
             self.__mutex.release()
         except :
-            self.connect()
+            # self.connect()
+            pass
 
 
     def run(self):
+        self.connect()
+        print("connect to iot hub.")
         self.__mqttc.loop_forever()
 
 if __name__ == '__main__':
@@ -68,7 +91,3 @@ if __name__ == '__main__':
     dataTransfer = DataTransfer(msg["gateway_id"])
     dataTransfer.send(msg)
     dataTransfer.start()
-
-
-
-
