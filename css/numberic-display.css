@@ -1,0 +1,99 @@
+.numeric-display{
+    background-color: #000;
+    position: relative;
+    display: inline-block;
+}
+.piece{
+    background-color: transparent;
+    color: #f33;
+    box-sizing: border-box;
+    position: absolute;
+    display: inline-block;
+    border-width: 6px;
+    border-style: solid;
+}
+.piece1{
+    height: 0;
+    width: 100%;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom: none;
+    top: 0;
+}
+.piece2{
+    top:calc(50% - 3px);
+    width: 94%;
+    left: 3%;
+    /*top:calc(45% - 6);        */
+    border:none;
+}
+.piece2 div{
+    border-color:#e33;
+    border-width: 3px;
+    border-style: solid;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    
+}
+.piece2-1{
+    height: 0;
+    /*width: 100%;    */    
+    border-top: none!important;
+    /*border-bottom:5px solid;    */
+}
+.piece2-2{
+    height: 0;
+    /*width: 100%;    */
+    /*border-width: 5px;*/
+    /*border-top:4px solid;*/
+    border-bottom: none!important;
+    /*top:49%;        */
+}
+.piece3{
+    height: 0;
+    width: 100%;    
+    /*border-bottom: solid;*/
+    border-left-color:  transparent;
+    border-right-color: transparent;
+    border-top: none;
+    bottom:0;        
+}
+.piece4{
+    height: 49%;
+    width: 0;    
+    /*border-left:6px solid;*/
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-right: none;
+    top:1.5%;        
+}
+.piece5{
+    height: 48%;
+    border-color: #333;
+    width: 0;    
+    /*border-right:6px solid;*/
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left: none;
+    top:1.5%;     
+    right: 0;   
+}
+.piece6{
+    height: 48%;
+    width: 0;    
+    /*border-left:6px solid;*/
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-right: none;
+    bottom:1.5%;      
+}
+.piece7{
+    height: 48%;
+    width: 0;    
+    /*border-right:6px solid;*/
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left: none;    
+    bottom: 1.5%;
+    right: 0;        
+}

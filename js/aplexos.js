@@ -127,6 +127,7 @@ function connectButton(object) {
         context.mqtt.subscribe(current_topic);
         context.topic = current_topic;
 
+        /*
         cur_payload = {};
         cur_payload["gateway_id"] = context.device;
         cur_payload["device_id"] = 1
@@ -147,6 +148,7 @@ function connectButton(object) {
         message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
         message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
         context.mqtt.client.send(message);
+        */
 
         object.innerHTML = "Unsubscribe";
     } else {
@@ -163,6 +165,12 @@ function connectButton(object) {
 function ledOptionOnChange(object) {
     console.log(object.value)
 
+    if (object.value == -1)
+        return;
+
+    led_status = object.value;
+    led_value = 1;
+
     cur_payload = {};
     cur_payload["gateway_id"] = context.device;
     cur_payload["device_id"] = 1
@@ -173,10 +181,28 @@ function ledOptionOnChange(object) {
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
     message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
     context.mqtt.client.send(message);
+
+    console.log("send over");
 }
 
 function numOptionOnChange(object) {
     console.log(object.value)
+
+    if (object.value == -1)
+        return;
+
+
+    var data={
+        char:1,
+        // dot=false,
+        // colon=false,
+        color:'#00e',
+    }
+    data.char = object.value;
+    nd1.inner(data);
+    nd2.inner(data);
+    nd3.inner(data);
+    nd4.inner(data);
 
     cur_payload["gateway_id"] = context.device;
     cur_payload["device_id"] = 1
@@ -212,4 +238,50 @@ $(function(){
 
     context = new Context();
     context.mqtt = new BaiduIoTHubMQTT("baidumap.mqtt.iot.gz.baidubce.com", 8884, "baidumap/iotmap", "bjBb+EUd5rwfo9fBaZUMlwG8psde+abMx35m/euTUfE=", "DataTransfer");
+
+    led_status = 0;
+    led_value = 1;
+    setInterval(function(){
+        if (led_status == 0) {
+            return;
+        } else if (led_status == 1) {
+            for (var i = 0; i < 8; i++)
+            {
+                $("[name='led_led_" + (i + 1) + "']").attr("src","img/led_green.png");
+            }
+        } else if (led_status == 2) {
+            for (var i = 0; i < 8; i++)
+            {
+                $("[name='led_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
+            }
+        } else if (led_status == 3) {
+            if (led_value > 0) {
+                for (var i = 0; i < 8; i++)
+                {
+                    $("[name='led_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
+                }
+                led_value = 0;
+            } else {
+                for (var i = 0; i < 8; i++)
+                {
+                    $("[name='led_led_" + (i + 1) + "']").attr("src","img/led_green.png");
+                }
+                led_value = 1;
+            }
+        } else if (led_status == 4) {
+            for (var i = 0; i < 8; i++)
+            {
+                if ((led_value >> i) == 1)
+                    $("[name='led_led_" + (i + 1) + "']").attr("src","img/led_green.png");
+                else 
+                    $("[name='led_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
+            }
+
+            led_value <<= 1;
+            if (led_value > 0x80)
+                led_value = 1;
+
+        }
+    },500)
+
 });
