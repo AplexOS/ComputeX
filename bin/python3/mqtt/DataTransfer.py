@@ -71,6 +71,10 @@ class DataTransfer(threading.Thread):
             if self.connected :
                 if json_data["funcode"] == 1 :
                     self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/btnData", payload=msg, retain=True)
+                if json_data["funcode"] == 2 :
+                    self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/ledBackend", payload=msg, retain=True)
+                if json_data["funcode"] == 3 :
+                    self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/numBackend", payload=msg, retain=True)
                 if json_data["funcode"] == 4 :
                     self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/tempData", payload=msg, retain=True)
             self.__mutex.release()

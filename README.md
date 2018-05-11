@@ -7,13 +7,17 @@
 
 ## MQTT Topic
 
-* `computex/+/iot/+/backend`：兼容以前版本
-  * `computex/{{city}}/iot/{{device}}/backend`
 * `computex/+/iot/+/ledBackend`：专门为反控Led控制
   * `computex/{{city}}/iot/{{device}}/ledBackend`
 * `computex/+/iot/+/numBackend`：专门为反控数码管控制
   * `computex/{{city}}/iot/{{device}}/numBackend`
-* `computex/+/iot/+/DataTransfer`：专门给数据传输
+* `computex/+/iot/+/btnData`：专门给按键数据传输
+  * `computex/{{city}}/iot/{{device}}/btnData`
+* `computex/+/iot/+/tempData`：专门给温度显示数据传输
+  * `computex/{{city}}/iot/{{device}}/tempData`
+* `computex/+/iot/+/backend`：兼容以前版本(已经不使用)
+  * `computex/{{city}}/iot/{{device}}/backend`
+* `computex/+/iot/+/DataTransfer`：兼容以前数据传输(已经不使用)
   * `computex/{{city}}/iot/{{device}}/DataTransfer`
 
 为了让新连接的设备能够获取到当前最新的消息，所有发送的消息带上`retained = true`;
