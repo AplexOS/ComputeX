@@ -1,7 +1,9 @@
 class Context{
     constructor() {
         this.mqtt = null;                       // mqtt client
-        this.topic = null;
+        this.dataTransferTopic = null;
+        this.ledBackendTopic = null;
+        this.numBackendTopic = null;
         this.device = null;
         this.city = null;
     }
@@ -13,7 +15,7 @@ class BaiduIoTHubMQTT {
         this.client = new Paho.MQTT.Client(address, port, "DeviceId-" + Math.random().toString(36).substring(7));
         this.username = username;
         this.passwd = passwd;
-        this.topic = topic;
+        this.dataTransferTopic = topic;
         this.serverConnected = false;
         
         // set callback handlers
@@ -40,14 +42,14 @@ class BaiduIoTHubMQTT {
         console.log("subscribe topic:" + topic);
         if (this.client.isConnected()) {
             this.client.subscribe(topic);
-            this.topic = topic;
+            this.dataTransferTopic = topic;
         }
     }
 
     unsubscribe(topic) {
         console.log("unsubscribe topic:" + topic);
         if (this.client.isConnected()) {
-            this.client.unsubscribe(this.topic);
+            this.client.unsubscribe(this.dataTransferTopic);
         }
     }
 
@@ -59,6 +61,7 @@ class BaiduIoTHubMQTT {
     // called when the client loses its connection
     onConnectionLost(responseObject) {
         console.log(responseObject);
+        this.connect();
     }
     
     // called when a message arrives
@@ -74,6 +77,29 @@ class BaiduIoTHubMQTT {
                     $("[name='light_led_" + (i + 1) + "']").attr("src","img/led_gray.png");
                 } 
             }
+        }
+
+        if (stminfo["funcode"] == 2) {
+            console.log($("#ledSelect").val(stminfo["value"]));
+
+            led_status = stminfo["value"];
+            led_value = 1;
+        }
+
+        if (stminfo["funcode"] == 3) {
+            console.log($("#numSelect").val(stminfo["value"]));
+
+            var data={
+                char:1,
+                // dot=false,
+                // colon=false,
+                color:'#00e',
+            }
+            data.char = stminfo["value"];
+            nd1.inner(data);
+            nd2.inner(data);
+            nd3.inner(data);
+            nd4.inner(data);
         }
 
         if (stminfo["funcode"] == 4) {
@@ -123,39 +149,24 @@ function connectButton(object) {
         if (context.device == null || context.city == null) 
             return;
 
-        var current_topic = "computex/" + context.city + "/iot/" + context.device + "/DataTransfer";
-        context.mqtt.subscribe(current_topic);
-        context.topic = current_topic;
+        var dataTransferTopic = "computex/" + context.city + "/iot/" + context.device + "/DataTransfer";
+        context.mqtt.subscribe(dataTransferTopic);
+        context.dataTransferTopic = dataTransferTopic;
 
-        /*
-        cur_payload = {};
-        cur_payload["gateway_id"] = context.device;
-        cur_payload["device_id"] = 1
-        cur_payload["funcode"] = 2
-        cur_payload["value"] = parseInt($("#ledSelect").val());
+        var ledBackendTopic = "computex/" + context.city + "/iot/" + context.device + "/ledBackend";
+        context.mqtt.subscribe(ledBackendTopic);
+        context.ledBackendTopic = ledBackendTopic;
 
-        // console.log(JSON.stringify(cur_payload));
-        message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-        message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
-        context.mqtt.client.send(message);
-
-        cur_payload["gateway_id"] = context.device;
-        cur_payload["device_id"] = 1
-        cur_payload["funcode"] = 3
-        cur_payload["value"] = parseInt($("#numSelect").val());
-
-        // console.log(JSON.stringify(cur_payload));
-        message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-        message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
-        context.mqtt.client.send(message);
-        */
+        var numBackendTopic = "computex/" + context.city + "/iot/" + context.device + "/numBackend";
+        context.mqtt.subscribe(numBackendTopic);
+        context.numBackendTopic = numBackendTopic;
 
         object.innerHTML = "Unsubscribe";
     } else {
-        if (context.topic != null) {
-            console.log(context.topic);
-            context.mqtt.unsubscribe(context.topic);
-            context.topic = null;
+        if (context.dataTransferTopic != null) {
+            console.log(context.dataTransferTopic);
+            context.mqtt.unsubscribe(context.dataTransferTopic);
+            context.dataTransferTopic = null;
         } 
 
         object.innerHTML = "Subscribe";
@@ -179,7 +190,8 @@ function ledOptionOnChange(object) {
 
     // console.log(JSON.stringify(cur_payload));
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
+    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/ledBackend";
+    message.retained = true;
     context.mqtt.client.send(message);
 
     console.log("send over");
@@ -190,7 +202,6 @@ function numOptionOnChange(object) {
 
     if (object.value == -1)
         return;
-
 
     var data={
         char:1,
@@ -211,7 +222,8 @@ function numOptionOnChange(object) {
 
     // console.log(JSON.stringify(cur_payload));
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/backend";
+    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/numBackend";
+    message.retained = true;
     context.mqtt.client.send(message);
 }
 $(function(){

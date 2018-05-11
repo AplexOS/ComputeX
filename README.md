@@ -67,3 +67,7 @@
 
 * `funcode`: `0x04`；
 * `value`: 温度对应的值；
+
+## 演示效果
+
+![./img/ComputeX.gif](./img/ComputeX.gif)

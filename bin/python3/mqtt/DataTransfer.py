@@ -20,8 +20,10 @@ class DataTransfer(threading.Thread):
 
     def on_connect(self, client, userdata, flags, rc):
         print(self.__name + ': connected with result code ' + str(rc))
-        print("computex/" + self.__city + "/iot/" + self.__name + "/backend")
-        client.subscribe("computex/" + self.__city + "/iot/" + self.__name + "/backend")
+        print("computex/" + self.__city + "/iot/" + self.__name + "/ledBackend")
+        client.subscribe("computex/" + self.__city + "/iot/" + self.__name + "/ledBackend")
+        print("computex/" + self.__city + "/iot/" + self.__name + "/numBackend")
+        client.subscribe("computex/" + self.__city + "/iot/" + self.__name + "/numBackend")
         self.connected = True;
 
     def on_message(self, client, userdata, msg):
@@ -67,7 +69,7 @@ class DataTransfer(threading.Thread):
         try:
             self.__mutex.acquire()
             if self.connected :
-                self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg)
+                self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg, retain=True)
             self.__mutex.release()
         except :
             # self.connect()
