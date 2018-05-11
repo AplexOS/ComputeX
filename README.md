@@ -1,13 +1,19 @@
 # README.md
 
 * [Show Time](http://zorozeng.com/ComputeX/)  
+* [设备仿真器](bin/python3)
+* [Policy自动生成器](bin/python2)：记得绑定策略
 * [Backend Code](https://github.com/Aplexchenfl/mqtt_message)
 
 ## MQTT Topic
 
-* `computex/+/iot/+/backend`
+* `computex/+/iot/+/backend`：兼容以前版本
   * `computex/{{city}}/iot/{{device}}/backend`
-* `computex/+/iot/+/DataTransfer`
+* `computex/+/iot/+/ledBackend`：专门为反控Led控制
+  * `computex/{{city}}/iot/{{device}}/backend`
+* `computex/+/iot/+/numBackend`：专门为反控数码管控制
+  * `computex/{{city}}/iot/{{device}}/backend`
+* `computex/+/iot/+/DataTransfer`：专门给数据传输
   * `computex/{{city}}/iot/{{device}}/DataTransfer`
 
 ## Simulation
