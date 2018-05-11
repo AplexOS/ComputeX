@@ -69,7 +69,10 @@ class DataTransfer(threading.Thread):
         try:
             self.__mutex.acquire()
             if self.connected :
-                self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/DataTransfer", payload=msg, retain=True)
+                if json_data["funcode"] == 1 :
+                    self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/btnData", payload=msg, retain=True)
+                if json_data["funcode"] == 4 :
+                    self.__mqttc.publish("computex/" + self.__city + "/iot/" + json_data["gateway_id"] + "/tempData", payload=msg, retain=True)
             self.__mutex.release()
         except :
             # self.connect()

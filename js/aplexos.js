@@ -1,7 +1,8 @@
 class Context{
     constructor() {
         this.mqtt = null;                       // mqtt client
-        this.dataTransferTopic = null;
+        this.tempDataTopic = null;
+        this.btnDataTopic = null;
         this.ledBackendTopic = null;
         this.numBackendTopic = null;
         this.device = null;
@@ -15,7 +16,7 @@ class BaiduIoTHubMQTT {
         this.client = new Paho.MQTT.Client(address, port, "DeviceId-" + Math.random().toString(36).substring(7));
         this.username = username;
         this.passwd = passwd;
-        this.dataTransferTopic = topic;
+        this.tempDataTopic = topic;
         this.serverConnected = false;
         
         // set callback handlers
@@ -42,14 +43,14 @@ class BaiduIoTHubMQTT {
         console.log("subscribe topic:" + topic);
         if (this.client.isConnected()) {
             this.client.subscribe(topic);
-            this.dataTransferTopic = topic;
+            this.tempDataTopic = topic;
         }
     }
 
     unsubscribe(topic) {
         console.log("unsubscribe topic:" + topic);
         if (this.client.isConnected()) {
-            this.client.unsubscribe(this.dataTransferTopic);
+            this.client.unsubscribe(this.tempDataTopic);
         }
     }
 
@@ -80,14 +81,14 @@ class BaiduIoTHubMQTT {
         }
 
         if (stminfo["funcode"] == 2) {
-            console.log($("#ledSelect").val(stminfo["value"]));
+            $("#ledSelect").val(stminfo["value"]);
 
             led_status = stminfo["value"];
             led_value = 1;
         }
 
         if (stminfo["funcode"] == 3) {
-            console.log($("#numSelect").val(stminfo["value"]));
+            $("#numSelect").val(stminfo["value"]);
 
             var data={
                 char:1,
@@ -149,9 +150,9 @@ function connectButton(object) {
         if (context.device == null || context.city == null) 
             return;
 
-        var dataTransferTopic = "computex/" + context.city + "/iot/" + context.device + "/DataTransfer";
-        context.mqtt.subscribe(dataTransferTopic);
-        context.dataTransferTopic = dataTransferTopic;
+        var tempDataTopic = "computex/" + context.city + "/iot/" + context.device + "/tempData";
+        context.mqtt.subscribe(tempDataTopic);
+        context.tempDataTopic = tempDataTopic;
 
         var ledBackendTopic = "computex/" + context.city + "/iot/" + context.device + "/ledBackend";
         context.mqtt.subscribe(ledBackendTopic);
@@ -161,12 +162,22 @@ function connectButton(object) {
         context.mqtt.subscribe(numBackendTopic);
         context.numBackendTopic = numBackendTopic;
 
+        var btnDataTopic = "computex/" + context.city + "/iot/" + context.device + "/btnData";
+        context.mqtt.subscribe(btnDataTopic);
+        context.btnDataTopic = btnDataTopic;
+
         object.innerHTML = "Unsubscribe";
     } else {
-        if (context.dataTransferTopic != null) {
-            console.log(context.dataTransferTopic);
-            context.mqtt.unsubscribe(context.dataTransferTopic);
-            context.dataTransferTopic = null;
+        if (context.tempDataTopic != null) {
+            console.log(context.tempDataTopic);
+            context.mqtt.unsubscribe(context.tempDataTopic);
+            context.tempDataTopic = null;
+            context.mqtt.unsubscribe(context.ledBackendTopic);
+            context.ledBackendTopic = null;
+            context.mqtt.unsubscribe(context.numBackendTopic);
+            context.numBackendTopic = null;
+            context.mqtt.unsubscribe(context.btnDataTopic);
+            context.btnDataTopic = null;
         } 
 
         object.innerHTML = "Subscribe";
@@ -215,6 +226,7 @@ function numOptionOnChange(object) {
     nd3.inner(data);
     nd4.inner(data);
 
+    cur_payload = {};
     cur_payload["gateway_id"] = context.device;
     cur_payload["device_id"] = 1
     cur_payload["funcode"] = 3

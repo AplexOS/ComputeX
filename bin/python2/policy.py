@@ -8,7 +8,7 @@ import json
 
 citys        = ["Beijing", "Shanghai", "Shenzhen", "Taipei"]
 devices      = ["5100", "5102", "5130", "5140"]
-type_topics  = ["DataTransfer", "ledBackend", "numBackend", "backend"]
+type_topics  = ["DataTransfer", "ledBackend", "numBackend", "backend", "tempData", "btnData"]
 
 bd_endpoint    = "baidumap"
 # p3rZNBfnS8eiNHrG4CQ4mBhGnI8Sx3swcyKeLD4bsi8=
