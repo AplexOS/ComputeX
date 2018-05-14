@@ -15,6 +15,7 @@ class Simulation (threading.Thread):
     def run(self):
         while True:
             data = {}
+            data["city"] = self.city
             data["gateway_id"] = self.name
             data["device_id"] = 1
             data["funcode"] = random.randint(1, 4)

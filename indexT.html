@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/aplexos.css" type="text/css" />
+    <link rel="stylesheet" href="css/numberic-display.css" type="text/css" />
+    <title> AplexOS </title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+    <script src="js/gauge.min.js"></script>
+  </head>
+  <body>
+  
+  <div>
+    <div class="sps_header_css">
+      <img class="sps_logo_css" src="img/gateway-02.png"/>
+    </div>
+    <div style="clear: both;"></div>
+  <div>
+
+  <div  align="center">
+    <h1> Device Option:
+      <select class="deviceOption" onchange="cityOptionOnChange(this)">
+        <option value="0">Select City</option>
+        <option value="Beijing">Beijing</option>
+        <option value="Shanghai">Shanghai</option>
+        <option value="Shenzhen">Shenzhen</option>
+        <option value="Taipei">Taipei</option>
+      </select>
+      <select class="deviceOption" onchange="deviceOptionOnChange(this)">
+        <option value="0">Select Device</option>
+        <option value="5100">ARiio-5100</option>
+        <option value="5102">ARiio-5102</option>
+        <option value="5130">ARiio-5130</option>
+        <option value="5140">ARiio-5140</option>
+      </select>
+      <!--
+      <input type="button" class="deviceOption" style="width:250px; height:50px" id="subscribeBut" value="Connecting..." onclick="connectButton(this)" disabled="disabled"/>
+      -->
+      <button class="deviceOption" style="width:250px; height:50px" id="subscribeBut" disabled="disabled" onclick="connectButton(this)">Connecting</button>
+    </h1>
+  </div>
+
+  <div align="center" style="clear: both;">
+    <div style="float:left; width:70%">
+      <table style="float:right; width:86%">
+        <tr>
+          <td colspan="6">
+             <h2> Button Status </h2>
+          </td>
+        </tr>
+        <tr>
+          <td class="sps_img_tr">
+            <img name="light_led_1" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_2" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_3" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_4" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_5" src="img/led_gray.png"/>
+          </td>
+          <td class="sps_img_tr">
+            <img name="light_led_6" src="img/led_gray.png"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="sps_text_tr">
+            light1
+          </td>
+          <td class="sps_text_tr">
+            light2
+          </td>
+          <td class="sps_text_tr">
+            light3
+          </td>
+          <td class="sps_text_tr">
+            light4
+          </td>
+          <td class="sps_text_tr">
+            light5
+          </td>
+          <td class="sps_text_tr">
+            light6
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="float:right; width:30%">
+      <div style="float:left; padding-top: 35px; padding-left: 40px;">
+        <canvas id="temperature" data-type="radial-gauge"
+                data-width="150"
+                data-height="150"
+                data-units="℃"
+                data-title="false"
+                data-min-value="0"
+                data-max-value="100"
+                data-animate-on-init="true"
+                data-major-ticks="0,10,20,30,40,50,60,70,80,90,100"
+                data-minor-ticks="2"
+                data-stroke-ticks="true"
+                data-highlights='[{"from": 80, "to": 100, "color": "rgba(200, 50, 50, .75)"}]'
+                data-color-plate="#222"
+                data-color-major-ticks="#f5f5f5"
+                data-color-minor-ticks="#ddd"
+                data-color-title="#fff"
+                data-color-units="#ccc"
+                data-color-numbers="#eee"
+                data-color-needle-start="rgba(240, 128, 128, 1)"
+                data-color-needle-end="rgba(255, 160, 122, .9)"
+                data-value-box="true"
+                data-font-value="Repetition"
+                data-font-numbers="Repetition"
+                data-animated-value="true"
+                data-borders="false"
+                data-border-shadow-width="0"
+                data-needle-type="arrow"
+                data-needle-width="2"
+                data-needle-circle-size="7"
+                data-needle-circle-outer="true"
+                data-needle-circle-inner="false"
+                data-animation-duration="1500"
+                data-animation-rule="linear"
+                data-ticks-angle="250"
+                data-start-angle="55"
+                data-color-needle-shadow-down="#333"
+                data-value-box-width="45"
+        ></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div align="center">
+    <div style="width:35%; height:auto; float:left; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-left: 10%; margin-right: 5%; color: aliceblue; padding-bottom: 20px">
+      <table class="led_image">
+        <tr>
+          <td class="led_img_tr">
+            <img name="led_led_1" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_2" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_3" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_4" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_5" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_6" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_7" src="img/led_gray.png"/>
+          </td>
+          <td class="led_img_tr">
+            <img name="led_led_8" src="img/led_gray.png"/>
+          </td>
+        </tr>
+      </table>
+      <h3>
+        LED Status:
+        <select class="deviceOption" id="ledSelect" onchange="ledOptionOnChange(this)">
+          <option value="-1">Select</option>
+          <option value="1">All On</option>
+          <option value="2">All Off</option>
+          <option value="3">Blinking</option>
+          <option value="4">Marquee lamp</option>
+        </select>
+      </h3>
+    </div> 
+    <div style="width:35%; height:auto; float:right; display:inline; margin-top: 30px; border-radius:30px; background-color: #707070; margin-right: 10%; margin-left: 5%; color: aliceblue; padding-bottom: 20px">
+      <div id="led1" style='margin-top: 30px; display:inline-block;'></div>
+      <div id="led2" style='margin-top: 30px; display:inline-block;'></div>
+      <div id="led3" style='margin-top: 30px; display:inline-block;'></div>
+      <div id="led4" style='margin-top: 30px; display:inline-block;'></div>
+      <h3>
+        Digital Tube:
+        <select class="deviceOption" id="numSelect" onchange="numOptionOnChange(this)">
+          <option value="-1">Select</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
+      </h3>
+    </div> 
+  </div>
+
+  <footer>
+    <div class="sps_foot_css" align="center" role="contentinfo">
+      <img class="sps_logo_css" src="img/gateway-04.png"/>
+    </div>
+  </footer>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script src="js/numberic-display.js"></script>
+  <script type="text/javascript" src="js/aplexosT.js"></script>
+  
+  </body>
+</html>
+

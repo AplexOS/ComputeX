@@ -2,6 +2,8 @@
   "title": "ComputeX",
   "debug": true,
   "console": true,
+  "iothub_username": "baidumap/computex",
+  "iothub_password": "p3rZNBfnS8eiNHrG4CQ4mBhGnI8Sx3swcyKeLD4bsi8=",
   "websocketserver": {
     "wss_port": 1883,
     "wss_address": "0.0.0.0"

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import paho.mqtt.client as mqtt
+from Config.ConfigureWin import *
 import json
 import threading
 import random
@@ -46,7 +47,7 @@ class DataTransfer(threading.Thread):
         self.__mutex.acquire()
 
         self.__mqttc = mqtt.Client(client_id="DeviceId-" + '%06x' % random.randrange(16**12))
-        self.__mqttc.username_pw_set("baidumap/iotmap", "bjBb+EUd5rwfo9fBaZUMlwG8psde+abMx35m/euTUfE=")
+        self.__mqttc.username_pw_set(ConfigureWin.config["iothub_username"], ConfigureWin.config["iothub_password"])
         self.__mqttc.on_connect = self.on_connect
         self.__mqttc.on_message = self.on_message
         self.__mqttc.on_disconnect = self.on_disconnect
