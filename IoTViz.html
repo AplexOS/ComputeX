@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <!-- 加载 物可视SDK-->
+        <script type="text/javascript" src="https://iot-dv.cdn.bcebos.com/prod/sdk/bdiotvizplayer.min.js"></script>
+        <style>
+            html, body {
+                font-size: 12px;
+                font-family: "PingFang SC";
+                display: block;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            #content {
+                width: 100%;
+                height: 50%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="content"></div>
+        <button type="button" onclick="changeCity()">Click Me!</button>
+
+        <script type="text/javascript">
+            const bdIotVizPlayer = window.BDIotVizPlayer;
+            const containerElement = document.getElementById('content');
+
+            var iotvizapi = null;
+            const myDashboard = bdIotVizPlayer({
+                containerElement,
+                dashboardId: '5a3071a915ce05525889e674',
+                fillMode: 'none', // <-- Possible value: 'none', 'contain', 'cover'
+                token: {
+                    type: 'embedded',
+                    value: '691311df678a05653e24f4f7aa6ebada' // <-- Access Token for current dashboard
+                },
+                onload: async function (api) {
+                    await api.getDashboardConfig().then(async function(config){
+                        console.log(config); // <--- Current Dashboard Config
+                    });
+
+                    // refer to API doc for complete API description
+                    iotvizapi = api;
+                    iotvizapi.updateDataTableConfig("90eca217-9e66-4552-854e-63be1e679375", {
+                        "filters": {
+                            "start": 0,
+                            "end": 0,
+                            "tags": [{
+                                "in": ["Shanghai", "Beijing"],
+                                "tag": "city"
+                            }]
+                        },
+                        "trigger": {
+                            "interval": 5000,
+                            "rangeRule": "last7days",
+                            "type": "interval"
+                         }
+                    });
+                }
+            });
+
+            function changeCity() {
+                console.log(iotvizapi);
+
+                iotvizapi.updateDataTableConfig("90eca217-9e66-4552-854e-63be1e679375", {
+                    "filters": {
+                        "start": 0,
+                        "end": 0,
+                        "tags": [{
+                            "in": ["Shanghai", "Beijing", "Shenzhen"],
+                            "tag": "city"
+                        }]
+                    },
+                    "trigger": {
+                        "interval": 5000,
+                        "rangeRule": "last7days",
+                        "type": "interval"
+                     }
+                });
+            }
+        </script>
+    </body>
+</html>
+

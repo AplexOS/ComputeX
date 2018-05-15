@@ -77,3 +77,10 @@
 ## 演示效果
 
 ![./img/ComputeX.gif](./img/ComputeX.gif)
+
+## 物可视（时序数据库）
+
+* 时序数据库：``SELECT funcode AS metric, `value` AS _value, `timestamp` AS _timestamp, gateway_id, device_id, city FROM computex/+/iot/+/tempData WHERE funcode=4``
+* 展示页面HTML内容：[IoTViz.html](./IoTViz.html)
+* 数据显示：  
+  ![./img/IoTViz.png](./img/IoTViz.png)
