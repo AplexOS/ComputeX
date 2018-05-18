@@ -150,6 +150,9 @@ function connectButton(object) {
         if (context.device == null || context.city == null) 
             return;
 
+        $("#deviceOptionAddress").attr('disabled', 'disabled');
+        $("#deviceOptionDevice").attr('disabled', 'disabled');
+
         var tempDataTopic = "computex/" + context.city + "/iot/" + context.device + "/tempData";
         context.mqtt.subscribe(tempDataTopic);
         context.tempDataTopic = tempDataTopic;
@@ -168,6 +171,10 @@ function connectButton(object) {
 
         object.innerHTML = "Unsubscribe";
     } else {
+
+        $("#deviceOptionAddress").removeAttr('disabled');
+        $("#deviceOptionDevice").removeAttr('disabled');
+
         if (context.tempDataTopic != null) {
             console.log(context.tempDataTopic);
             context.mqtt.unsubscribe(context.tempDataTopic);
