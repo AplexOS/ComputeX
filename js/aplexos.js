@@ -50,7 +50,7 @@ class BaiduIoTHubMQTT {
     unsubscribe(topic) {
         console.log("unsubscribe topic:" + topic);
         if (this.client.isConnected()) {
-            this.client.unsubscribe(this.tempDataTopic);
+            this.client.unsubscribe(topic);
         }
     }
 
