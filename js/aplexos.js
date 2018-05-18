@@ -201,7 +201,8 @@ function ledOptionOnChange(object) {
 
     // console.log(JSON.stringify(cur_payload));
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/ledBackend";
+    // message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/ledBackend";
+    message.destinationName = context.ledBackendTopic;
     message.retained = true;
     context.mqtt.client.send(message);
 
@@ -234,7 +235,8 @@ function numOptionOnChange(object) {
 
     // console.log(JSON.stringify(cur_payload));
     message = new Paho.MQTT.Message(JSON.stringify(cur_payload));
-    message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/numBackend";
+    // message.destinationName = "computex/" + context.city + "/iot/" + context.device + "/numBackend";
+    message.destinationName = context.numBackendTopic;
     message.retained = true;
     context.mqtt.client.send(message);
 }
